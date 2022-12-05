@@ -47,7 +47,7 @@ def get_recommend(song_title):
     music = []
     music.extend(generate_recommendation(song_title,cosine).values)
     sig_kernel = sigmoid_kernel(normalized_df)
-    music.extend(generate_recommendation('Parallel Lines',sig_kernel).values)
+    music.extend(generate_recommendation(song_title,sig_kernel).values)
     
     return music
 
