@@ -36,7 +36,7 @@ def generate_recommendation(song_title, model_tyoe=cosine):
     # Sort the most similar songs
     similarity_score = sorted(score, key=lambda x:x[1], reverse=True)
     # Select the top10 recommend songs
-    similarity_score = similarity_score[1:11]
+    similarity_score = similarity_score[1:6]
     top_sons_index = [i[0] for i in similarity_score]
     # Top10 recommend songs
     top_songs = df['song_title'].iloc[top_sons_index]
