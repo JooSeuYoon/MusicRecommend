@@ -3,12 +3,11 @@ import datetime
 import dash
 import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html, State, dash_table
-import method1_songs, method2_songs
+from source import method1_songs
+from source import method2_songs
+
 import pandas as pd
 import io
-
-print(pd.__version__)
-print(dash.__version__)
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 

@@ -5,12 +5,12 @@ from os.path import isfile, join
 
 nowPath = os.getcwd()
 
-csvFiles = [f for f in listdir(nowPath + "/songs_like") if isfile(join(nowPath + "/songs_like", f))]
+csvFiles = [f for f in listdir(nowPath + "/assets/songs_like") if isfile(join(nowPath + "/assets/songs_like", f))]
 
 playList = dict() # key : Playlist File name / value : [song ID, song Name]
 
 for oneFile in csvFiles:
-   with open(nowPath + "/songs_like/" + oneFile, 'r') as file:
+   with open(nowPath + "/assets/songs_like/" + oneFile, 'r') as file:
       songsList = []
       reader = csv.reader(file)
       countLine = 0

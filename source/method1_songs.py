@@ -7,7 +7,7 @@ import os
 
 nowPath = os.getcwd()
 
-df = pd.read_csv(nowPath + "/2017_songs/data.csv")
+df = pd.read_csv(nowPath + "/assets/2017_songs/data.csv")
 
 feature_cols=['acousticness', 'danceability', 'duration_ms', 'energy',
               'instrumentalness', 'key', 'liveness', 'loudness', 'mode',
