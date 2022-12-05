@@ -7,6 +7,8 @@ import method1_songs, method2_songs
 import pandas as pd
 import io
 
+print(pd.__version__)
+print(dash.__version__)
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -258,4 +260,5 @@ def updatePlaylistInput(n_clicks, contents, filename):
 if __name__ == "__main__":
     print("Run server ")
     app.run_server(debug=True)
+    
     
