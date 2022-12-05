@@ -32,7 +32,7 @@ def generate_recommendation(song_title, model_type=cosine):
     # Get song indices
     index = indices[song_title]
     # Get list of songs for given songs
-    score = list(enumerate(model_type[indices['Parallel Lines']]))
+    score = list(enumerate(model_type[indices[song_title]]))
     # Sort the most similar songs
     similarity_score = sorted(score, key=lambda x:x[1], reverse=True)
     # Select the top10 recommend songs
@@ -46,8 +46,8 @@ def generate_recommendation(song_title, model_type=cosine):
 def get_recommend(song_title):
     music = []
     music.extend(generate_recommendation(song_title,cosine).values)
-    sig_kernel = sigmoid_kernel(normalized_df)
-    music.extend(generate_recommendation(song_title,sig_kernel).values)
+    #sig_kernel = sigmoid_kernel(normalized_df)
+    #music.extend(generate_recommendation(song_title,sig_kernel).values)
     
     return music
 
