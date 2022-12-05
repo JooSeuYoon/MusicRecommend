@@ -9,7 +9,6 @@ from source import method2_songs
 import pandas as pd
 import io
 
-print(dbc.__version__)
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -218,8 +217,7 @@ def updateUserInput(n_clicks,userInput):
     print(n_clicks)
     print(userInput)
     if(n_clicks > 0):
-        result = method1_songs.generate_recommendation(userInput)
-
+        result = method1_songs.get_recommend(userInput)
         htmlReturn = [html.Br(), html.H5("Recommend Songs : ")]
         i = 0
         for song in result:
