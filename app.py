@@ -60,8 +60,29 @@ content = html.Div(id="page-content", style=CONTENT_STYLE)
 
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
+home_input = html.Div(
+    [
+        html.H2("Music Recommendation"),
+        html.H4("Business Intelligence"),
+        html.H5("Team : Linus, Tristan, SeuYoon"),
+        html.Div(children=[
+            html.Div(style={"float":"left", "margin":"10px"}, children=[
+                html.H6("1. Recommendation By Songs")
+            ]),
+            html.Div(style={"float":"left", "margin":"10px"}, children=[
+                html.H6("2. Recommendation By Playlists")
+            ])
+        ])
+    ]
+)
+
+#music_name_list = method1_songs.get_songs_name()
+
 method1_input = html.Div(
     [
+        html.Datalist(id="song_name_lists", children=[
+            html.Option(value= song_name) for song_name in method1_songs.get_songs_name()
+        ]),
         html.H3("Music Recommendation By Songs"),
         html.Br(),
         html.P("Input your favorite song, and find out what is the similar song!"),
@@ -69,7 +90,7 @@ method1_input = html.Div(
         html.Div([
             html.H4("Music Input"),
             html.Br(),
-            dcc.Input(id = "userSongInput", placeholder="Music Name"),
+            dcc.Input(id = "userSongInput", placeholder="Music Name",list="song_name_lists"),
             html.Button(id = 'submit_userSong', n_clicks=0, children='Go!'),
             ]),
         html.P(),
@@ -195,7 +216,7 @@ def makePlayList(contents, filename):
 def render_page_content(pathname):
     print(pathname)
     if pathname == "/":
-        return html.P("This is the content of the home page!")
+        return home_input
     elif pathname == "/method1":
         return method1_input
     elif pathname == "/method2":

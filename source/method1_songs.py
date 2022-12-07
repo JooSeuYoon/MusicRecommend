@@ -19,7 +19,6 @@ normalized_df = scaler.fit_transform(df[feature_cols])
 
 # Create a pandas series with song titles as indices and indices as series values
 indices = pd.Series(df.index, index=df['song_title']).drop_duplicates()
-
 # Create cosine similarity matrix based on given matrix
 cosine = cosine_similarity(normalized_df)
 
@@ -33,6 +32,7 @@ def generate_recommendation(song_title, model_type=cosine):
     index = indices[song_title]
     # Get list of songs for given songs
     score = list(enumerate(model_type[indices[song_title]]))
+    print(score[1])
     # Sort the most similar songs
     similarity_score = sorted(score, key=lambda x:x[1], reverse=True)
     # Select the top10 recommend songs
@@ -50,6 +50,9 @@ def get_recommend(song_title):
     #music.extend(generate_recommendation(song_title,sig_kernel).values)
     
     return music
+
+def get_songs_name():
+    return (list(indices.index))
 
 #print("Recommended Songs:")
 #print(generate_recommendation('Parallel Lines', cosine).values)
