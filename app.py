@@ -5,6 +5,7 @@ import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html, State, dash_table
 from source import method1_songs
 from source import method2_songs
+import os
 
 import pandas as pd
 import io
@@ -48,6 +49,8 @@ sidebar = html.Div(
                 dbc.NavLink("Recommend BySong", href="/method1", active="exact"),
                 html.Br(),
                 dbc.NavLink("Recommend ByPlaylist", href="/method2", active="exact"),
+                html.Br(),
+                dbc.NavLink("Review", href="/review", active="exact")
             ],
             vertical=True,
             pills=True,
@@ -98,7 +101,6 @@ method1_input = html.Div(
     ]
 )
 
-user_playList = []
 
 method2_input = html.Div(
     [
@@ -145,6 +147,28 @@ method2_input = html.Div(
                 html.Div(id = "playListRec",style={"float":"left", "margin":"10px", "margin-left":"20px"})
             ]),
             ]),
+    ]
+)
+
+review_input = html.Div(
+    [
+        html.H3("User Review Page"),
+        html.Br(),
+        html.H5("Let us know if you were satisfied with our service!"),
+        html.Br(),
+        html.Div(children=[
+            html.P("1. How was the music recommendation by Songs?"),
+            dcc.Input(id="song_review", placeholder="Tell us how was it!", style={"width":"500px", "height":"100px"}),
+            html.H1("\n"),
+            html.P("2. How was the music recommendation by Playlists?"),
+            dcc.Input(id="playlist_review", placeholder="Tell us how was it!", style={"width":"500px", "height":"100px"}),
+            html.H1("\n"),
+            html.P("3. How was the interface of our web site?"),
+            dcc.Input(id="interface_review", placeholder="Tell us how was it!", style={"width":"500px", "height":"100px"}),
+            html.H1("\n"),
+            html.Button(id="submit_review", n_clicks=0, children="Submit"),
+            html.Div(id="hidden-div",style={"display":"none"})
+        ])
     ]
 )
 
@@ -221,6 +245,8 @@ def render_page_content(pathname):
         return method1_input
     elif pathname == "/method2":
         return method2_input
+    elif pathname == "/review":
+        return review_input
     # If the user tries to reach a different page, return a 404 message
     return html.Div(
         [
@@ -276,6 +302,19 @@ def updatePlaylistInput(n_clicks, contents, filename):
             htmlReturn.append(html.P("{}. ".format(i) + song))
 
         return htmlReturn
+
+@app.callback(Output("hidden-div", "children"),
+Input("submit_review", "n_clicks"),
+State("song_review", "value"),
+State("playlist_review", "value"),
+State("interface_review", "value")
+    )
+def saveReview(n_clicks, song_review, playlist_review, interface_review):
+    review_file = open(os.getcwd() + "/assets/review/review.csv", "a")
+    print("review submit")
+    if(n_clicks > 0):
+        print(song_review + "," + playlist_review + "," + interface_review + "\n")
+        review_file.write(song_review + "," + playlist_review + "," + interface_review + "\n")
 
 
 if __name__ == "__main__":
