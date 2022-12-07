@@ -68,12 +68,25 @@ home_input = html.Div(
         html.H2("Music Recommendation"),
         html.H4("Business Intelligence"),
         html.H5("Team : Linus, Tristan, SeuYoon"),
+        html.Br(),
         html.Div(children=[
-            html.Div(style={"float":"left", "margin":"10px"}, children=[
-                html.H6("1. Recommendation By Songs")
+            html.Div(style={"margin":"10px"}, children=[
+                html.H6("1. Recommendation By Songs"),
+                html.P("We recommend music based on the song of 2017 which is kaggle dataset."),
+                html.P("Use the cosine similarity method to recommend 5 different music based on the music user input."),
+                html.H1("\n")
             ]),
-            html.Div(style={"float":"left", "margin":"10px"}, children=[
-                html.H6("2. Recommendation By Playlists")
+            html.Div(style={"margin":"10px"}, children=[
+                html.H6("2. Recommendation By Playlists"),
+                html.P("We recommend music based on the Spotify user's liked-song-playlist."),
+                html.P("Check how many songs overlap for each playlist and recommend 10 other songs on the playlist that overlap the most."),
+                html.H1("\n")
+            ]),
+            html.Div(style={"margin":"10px"}, children=[
+                html.H6("3. User Review Page"),
+                html.P("In order to improve evaluation and better interface, "),
+                html.P("we have received reviews from users and implemented them so that administrators can check them."),
+                html.H1("\n")
             ])
         ])
     ]
@@ -156,7 +169,7 @@ review_input = html.Div(
         html.Br(),
         html.H5("Let us know if you were satisfied with our service!"),
         html.Br(),
-        html.Div(children=[
+        html.Div(style={"float":"left", "margin" : "20px"},children=[
             html.P("1. How was the music recommendation by Songs?"),
             dcc.Input(id="song_review", placeholder="Tell us how was it!", style={"width":"500px", "height":"100px"}),
             html.H1("\n"),
@@ -168,7 +181,14 @@ review_input = html.Div(
             html.H1("\n"),
             html.Button(id="submit_review", n_clicks=0, children="Submit"),
             html.Div(id="hidden-div",style={"display":"none"})
+        ]),
+        html.Div(style={"float":"left", "margin":"20px"}, children=[
+            html.P("If you are administrator, please input the password and check the user's review."),
+            dcc.Input(id="password", type="password", placeholder="password", style={"margin-right":"10px"}),
+            html.Button(id="pwd_button", n_clicks=0, children="Enter"),
+            html.Div(id = "user_review_div")
         ])
+
     ]
 )
 
@@ -316,6 +336,22 @@ def saveReview(n_clicks, song_review, playlist_review, interface_review):
         print(song_review + "," + playlist_review + "," + interface_review + "\n")
         review_file.write(song_review + "," + playlist_review + "," + interface_review + "\n")
 
+@app.callback(Output("user_review_div", "children"),
+Input("pwd_button", "n_clicks"),
+State("password", "value")
+)
+def showReview(n_clicks, pwd_value):
+    if(n_clicks> 0):
+        if(pwd_value=="1217"):
+            df = pd.read_csv(os.getcwd() + "/assets/review/review.csv")
+            print(df)
+            return (
+                html.Table([html.Tr([html.Th(col) for col in df.columns])] + 
+                [html.Tr([
+                    html.Td(df.iloc[i][col]) for col in df.columns
+                ]) for i in range(min(len(df), 10))]
+            ) 
+            )
 
 if __name__ == "__main__":
     print("Run server ")
