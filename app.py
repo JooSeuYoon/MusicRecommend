@@ -344,7 +344,6 @@ def showReview(n_clicks, pwd_value):
     if(n_clicks> 0):
         if(pwd_value=="1217"):
             df = pd.read_csv(os.getcwd() + "/assets/review/review.csv")
-            print(df)
             return (
                 html.Table([html.Tr([html.Th(col) for col in df.columns])] + 
                 [html.Tr([
