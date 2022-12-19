@@ -333,8 +333,8 @@ def saveReview(n_clicks, song_review, playlist_review, interface_review):
     review_file = open(os.getcwd() + "/assets/review/review.csv", "a")
     print("review submit")
     if(n_clicks > 0):
-        print(song_review + "," + playlist_review + "," + interface_review + "\n")
-        review_file.write(song_review + "," + playlist_review + "," + interface_review + "\n")
+        print(song_review + "," + playlist_review + "," + interface_review)
+        review_file.write("\n"+song_review + "," + playlist_review + "," + interface_review + "\n")
 
 @app.callback(Output("user_review_div", "children"),
 Input("pwd_button", "n_clicks"),
